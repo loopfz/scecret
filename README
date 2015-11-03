@@ -1,0 +1,52 @@
+# TIME Stories SCEnario CREation Tool (SCECRET)
+
+Author:     Thomas Schaffer (loopfz@gmail.com)
+Language:   Golang (https://golang.org)
+License:    MIT
+
+TIME Stories (http://www.spacecowboys.fr/time-stories) is an amazing game.
+Great system, endless possibilities. The retail scenarios are great fun,
+but the system encourages fan-made scenarios like few games do.
+
+To facilitate the creation of such scenarios, this W.I.P. project aims
+to provide an on-line scenario creation tool.
+
+The components will be:
+    - a REST API
+    - a front-end website
+    - possibly some mobile apps if some generous mobile devs chime in
+
+The features:
+    - Create/manipulate game objects (elements, locations, receptacles, ...)
+        through dedicated views
+    - See an overview of your scenario deck in a deck view, reorganize,
+        zoom in on a card to edit, ...
+    - The power of storing your card components in a database:
+        Want to change the icon of one of your character abilities?
+        -> No need to edit all your cards
+    - Add meta-information on your cards:
+        Card X (unlocks) -> State token Y (unlocks) -> Card Z
+        Card X (skill test) -> Stat Y (3 Normal shields, 2 Skull shields, ...)
+        -> This lets you navigate the interface following your game logic
+        -> It also auto-adds the necessary icons to your cards,
+            which you can then edit
+    - Generate ready-to-print PDFs
+    - Down the line, some helpful visualization:
+        Stat X is used in N skill tests
+        Easily see orphan elements / state tokens
+        ...
+
+The progress:
+    - Model objects: 50%
+        Generic card implementation done
+        Next: Higher-level game objects (that rely on the Card object)
+    - API handlers: 0%
+        TODO
+    - PDF generation: 0%
+        TODO
+    - Website front-end: 0%
+        TODO
+    - Mobile front-end: 0%
+        ?
+    
+ETA for a proof-of-concept: January 2016
