@@ -72,6 +72,7 @@ type SkillTest struct {
 	NormalShields  uint  `json:"normal_shields" db:"normal_shields"`
 	SkullShields   uint  `json:"skull_shields" db:"skull_shields"`
 	HeartShields   uint  `json:"heart_shields" db:"heart_shields"`
+	UTShields      uint  `json:"ut_shields" db:"ut_shields"`
 	SpecialShields uint  `json:"special_shields" db:"special_shields"`
 }
 
@@ -202,7 +203,7 @@ func (c *Card) Delete(db *gorp.DbMap) error {
 
 // Create a skill test.
 // This will also create CardIcon objects on the Front of the Card, for the statistic itself and each of the present shields.
-func (c *Card) CreateSkillTest(db *gorp.DbMap, linkedStat *stat.Stat, NormalShields, SkullShields, HeartShields, SpecialShields uint) (*SkillTest, error) {
+func (c *Card) CreateSkillTest(db *gorp.DbMap, linkedStat *stat.Stat, NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) (*SkillTest, error) {
 	if db == nil || linkedStat == nil {
 		return nil, errors.New("Missing parameters to create skill test")
 	}
@@ -227,7 +228,7 @@ func (c *Card) CreateSkillTest(db *gorp.DbMap, linkedStat *stat.Stat, NormalShie
 	}
 
 	err = addShieldsAndStatIcon(db, c, linkedStat, st,
-		NormalShields, SkullShields, HeartShields, SpecialShields)
+		NormalShields, SkullShields, HeartShields, UTShields, SpecialShields)
 	if err != nil {
 		return nil, err // TODO Tx
 	}
@@ -236,7 +237,7 @@ func (c *Card) CreateSkillTest(db *gorp.DbMap, linkedStat *stat.Stat, NormalShie
 }
 
 func addShieldsAndStatIcon(db *gorp.DbMap, c *Card, linkedStat *stat.Stat, st *SkillTest,
-	NormalShields, SkullShields, HeartShields, SpecialShields uint) error {
+	NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) error {
 	// Add shield CardIcons
 	offsetX, err := addShieldCardIcon(db, c, 0, NormalShields, icon.NORMAL_SHIELD, st)
 	if err != nil {
@@ -247,6 +248,10 @@ func addShieldsAndStatIcon(db *gorp.DbMap, c *Card, linkedStat *stat.Stat, st *S
 		return err
 	}
 	offsetX, err = addShieldCardIcon(db, c, offsetX, HeartShields, icon.HEART_SHIELD, st)
+	if err != nil {
+		return err
+	}
+	offsetX, err = addShieldCardIcon(db, c, offsetX, HeartShields, icon.UT_SHIELD, st)
 	if err != nil {
 		return err
 	}
@@ -337,7 +342,7 @@ func (c *Card) LoadSkillTestByID(db *gorp.DbMap, IDSkillTest int64) (*SkillTest,
 // This will also create CardIcon objects on the Front of the Card, for the statistic itself and each of the present shields.
 // The card parameter CANNOT overwrite the card associated with the SkillTest, it is permanent.
 // It is passed only to be able to retrieve the associated CardIcon objects.
-func (st *SkillTest) Update(db *gorp.DbMap, card *Card, linkedStat *stat.Stat, NormalShields, SkullShields, HeartShields, SpecialShields uint) error {
+func (st *SkillTest) Update(db *gorp.DbMap, card *Card, linkedStat *stat.Stat, NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) error {
 	if db == nil || linkedStat == nil {
 		return errors.New("Missing parameters to update skill test")
 	}
@@ -368,7 +373,7 @@ func (st *SkillTest) Update(db *gorp.DbMap, card *Card, linkedStat *stat.Stat, N
 	}
 	// Recreate new icons
 	err = addShieldsAndStatIcon(db, card, linkedStat, st,
-		NormalShields, SkullShields, HeartShields, SpecialShields)
+		NormalShields, SkullShields, HeartShields, UTShields, SpecialShields)
 	if err != nil {
 		return err // TODO Tx
 	}

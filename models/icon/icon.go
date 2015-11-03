@@ -14,6 +14,7 @@ const (
 	NORMAL_SHIELD  = "normal_shield"
 	SKULL_SHIELD   = "skull_shield"
 	HEART_SHIELD   = "heart_shield"
+	UT_SHIELD      = "ut_shield"
 	SPECIAL_SHIELD = "special_shield"
 )
 
