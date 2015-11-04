@@ -81,12 +81,14 @@ func ListLocations(db *gorp.DbMap, scenar *Scenario) ([]*Location, error) {
 }
 
 // Load a Location from ID. Optionally filtered by scenario.
-func LoadLocationFromID(db *gorp.DbMap, scenar *Scenario) (*Location, error) {
+func LoadLocationFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Location, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to list locations")
 	}
 
-	selector := sqlgenerator.PGsql.Select(`*`).From(`"location"`)
+	selector := sqlgenerator.PGsql.Select(`*`).From(`"location"`).Where(
+		squirrel.Eq{`id`: ID},
+	)
 
 	if scenar != nil {
 		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
@@ -163,6 +165,8 @@ func (loc *Location) CreateLocationCard(db *gorp.DbMap, scenar *Scenario, letter
 		return nil, errors.New("Missing db parameter to create location card")
 	}
 
+	letter = strings.ToUpper(strings.TrimSpace(letter))
+
 	cardDesc := fmt.Sprintf("%s - %s", loc.Name, letter)
 	card, err := CreateCard(db, scenar, 0, cardDesc, &CardFace{}, &CardFace{})
 	if err != nil {
@@ -172,7 +176,7 @@ func (loc *Location) CreateLocationCard(db *gorp.DbMap, scenar *Scenario, letter
 	lc := &LocationCard{
 		IDCard:     card.ID,
 		IDLocation: loc.ID,
-		Letter:     strings.ToUpper(letter),
+		Letter:     letter,
 	}
 
 	err = lc.Valid()
@@ -186,6 +190,123 @@ func (loc *Location) CreateLocationCard(db *gorp.DbMap, scenar *Scenario, letter
 	}
 
 	return lc, nil
+}
+
+// List a location's cards.
+func (loc *Location) ListLocationCards(db *gorp.DbMap) ([]*LocationCard, error) {
+	if db == nil {
+		return nil, errors.New("Missing db parameter to list location cards")
+	}
+
+	query, args, err := sqlgenerator.PGsql.Select(`*`).From(`"location_card"`).Where(
+		squirrel.Eq{`id_location`: loc.ID},
+	).ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	var lc []*LocationCard
+
+	_, err = db.Select(&lc, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return lc, nil
+}
+
+// Load a location card,
+func (loc *Location) LoadLocationCardFromID(db *gorp.DbMap, ID int64) (*LocationCard, error) {
+	if db == nil {
+		return nil, errors.New("Missing db parameter to load location card")
+	}
+
+	query, args, err := sqlgenerator.PGsql.Select(`*`).From(`"location_card"`).Where(
+		squirrel.And{
+			squirrel.Eq{`id`: ID},
+			squirrel.Eq{`id_location`: loc.ID},
+		},
+	).ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	var lc LocationCard
+
+	_, err = db.Select(&lc, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &lc, nil
+}
+
+// Update a location card.
+func (lc *LocationCard) Update(db *gorp.DbMap, letter string) error {
+	if db == nil {
+		return errors.New("Missing db parameter to update location card")
+	}
+
+	lc.Letter = strings.ToUpper(strings.TrimSpace(letter))
+
+	err := lc.Valid()
+	if err != nil {
+		return err
+	}
+
+	// Update card description with new letter
+	loc, err := LoadLocationFromID(db, nil, lc.IDLocation)
+	if err != nil {
+		return err
+	}
+	card, err := LoadCardFromID(db, nil, lc.IDCard)
+	if err != nil {
+		return err
+	}
+	cardDesc := fmt.Sprintf("%s - %s", loc.Name, lc.Letter)
+	err = card.Update(db, card.Number, cardDesc, card.Front, card.Back)
+	if err != nil {
+		return err
+	}
+
+	rows, err := db.Update(lc)
+	if err != nil {
+		return err // TODO Tx
+	}
+	if rows == 0 {
+		return errors.New("No such location card to update") // TODO Tx
+	}
+
+	return nil
+}
+
+// Delete a location card.
+func (lc *LocationCard) Delete(db *gorp.DbMap) error {
+	if db == nil {
+		return errors.New("Missing db parameter to update location card")
+	}
+
+	// Delete card object
+	card, err := LoadCardFromID(db, nil, lc.IDCard)
+	if err != nil {
+		return err
+	}
+	err = card.Delete(db)
+	if err != nil {
+		return err
+	}
+
+	rows, err := db.Delete(lc)
+	if err != nil {
+		return err // TODO Tx
+	}
+	if rows == 0 {
+		return errors.New("No such location card to delete") // TODO Tx
+	}
+
+	return nil
 }
 
 // Verify that a LocationCard is valid before creating/updating it.
@@ -203,7 +324,7 @@ func (lc *LocationCard) Valid() error {
 	return nil
 }
 
-// TEMP
+// TEMP ?
 func (loc *Location) GetCards(db *gorp.DbMap) ([]*Card, error) {
 
 	var c []*Card
