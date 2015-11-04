@@ -37,9 +37,12 @@ The features:
         ...
 
 The progress:
-    - Model objects: 50%
-        Generic card implementation done
-        Next: Higher-level game objects (that rely on the Card object)
+    - Model objects: 70%
+        Generic card done
+        Location done
+        Metadata done: state_token_link, location_link, skill_test
+        Graph generation done for scenario view (summary of relations between all location cards)
+        Next: Element (+ element_link metadata), Stat, Icon, Receptacle, MissionSuccess, Codex, Plan
     - API handlers: 0%
         TODO
     - PDF generation: 0%
