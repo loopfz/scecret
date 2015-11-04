@@ -25,7 +25,7 @@ func CreateLocationLink(db *gorp.DbMap, card *Card, loc *Location) (*LocationLin
 
 	if !loc.Hidden {
 		// If the location needs to be revealed by another card, it is hidden.
-		err := loc.Update(db, loc.Name, true)
+		err := loc.Update(db, loc.Name, true, loc.Notes)
 		if err != nil {
 			return nil, err
 		}

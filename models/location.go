@@ -17,6 +17,7 @@ type Location struct {
 	IDScenario int64  `json:"-" db:"id_scenario"`
 	Name       string `json:"name" db:"name"`
 	Hidden     bool   `json:"json:"hidden" db:"hidden"`
+	Notes      string `json:"notes" db:"notes"`
 }
 
 // LocationCard represents the cards contained in a location.
@@ -110,13 +111,14 @@ func LoadLocationFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Location, 
 }
 
 // Update a location.
-func (loc *Location) Update(db *gorp.DbMap, Name string, Hidden bool) error {
+func (loc *Location) Update(db *gorp.DbMap, Name string, Hidden bool, Notes string) error {
 	if db == nil {
 		return errors.New("Missing db parameter to update location")
 	}
 
-	loc.Name = Name
+	loc.Name = strings.TrimSpace(Name)
 	loc.Hidden = Hidden
+	loc.Notes = Notes
 
 	// TODO harmonize LocationCards descriptions (new name)
 
