@@ -57,8 +57,21 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	stateTokenIcon := &models.Icon{ShortName: "STATE_TOKEN_TEST"}
+	err = db.Insert(stateTokenIcon)
+	if err != nil {
+		panic(err)
+	}
 	combat := &models.Stat{Name: "Combat", IDScenario: scenar.ID, IDIcon: combatIcon.ID}
 	err = db.Insert(combat)
+	if err != nil {
+		panic(err)
+	}
+	stateToken := &models.StateToken{
+		ShortName: "STATE_TOKEN_TEST",
+		IDIcon:    stateTokenIcon.ID,
+	}
+	err = db.Insert(stateToken)
 	if err != nil {
 		panic(err)
 	}
@@ -128,6 +141,9 @@ func main() {
 	createSkillTest(db, crypteCards[4], combat, true)
 	createSkillTest(db, crypteCards[5], combat, true)
 
+	createStateTokenLink(db, infirmerieCards[4], stateToken, true)
+	createStateTokenLink(db, dortoirCards[3], stateToken, false)
+
 	out, err := models.Graph(db, scenar)
 	if err != nil {
 		panic(err)
@@ -174,6 +190,13 @@ func createLocLink(db *gorp.DbMap, card *models.Card, loc *models.Location) {
 
 func createSkillTest(db *gorp.DbMap, card *models.Card, stat *models.Stat, blocking bool) {
 	_, err := models.CreateSkillTest(db, card, stat, blocking, 0, 0, 0, 0, 0)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func createStateTokenLink(db *gorp.DbMap, card *models.Card, st *models.StateToken, unlocksUnlocked bool) {
+	_, err := models.CreateStateTokenLink(db, card, st, unlocksUnlocked)
 	if err != nil {
 		panic(err)
 	}
