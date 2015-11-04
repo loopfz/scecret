@@ -67,7 +67,10 @@
             {
                 "id": 11,
                 "description": "Infirmerie - E",
-                "blocking": false
+                "blocking": false,
+                "unlocks_state_tokens": [
+                    1
+                ]
             }
         ]
     },
@@ -169,7 +172,10 @@
             {
                 "id": 26,
                 "description": "Dortoir - D",
-                "blocking": false
+                "blocking": false,
+                "is_unlocked_state_tokens": [
+                    1
+                ]
             }
         ]
     },
