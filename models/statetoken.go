@@ -1,4 +1,4 @@
-package statetoken
+package models
 
 import (
 	"errors"
@@ -11,8 +11,9 @@ import (
 // that maintain game state (e.g. unlock access to cards)
 // These are bootstrapped in DB, only need Load functions.
 type StateToken struct {
-	ID     int64 `json:"id" db:"id"`
-	IDIcon int64 `json:"id_icon" db:"id_icon"`
+	ID        int64  `json:"id" db:"id"`
+	ShortName string `json:"short_name" db:"short_name"`
+	IDIcon    int64  `json:"id_icon" db:"id_icon"`
 }
 
 // Loads a state token by ID
@@ -39,10 +40,10 @@ func LoadFromID(db *gorp.DbMap, ID int64) (*StateToken, error) {
 	return &st, nil
 }
 
-// Loads all state tokens
-func LoadAll(db *gorp.DbMap) ([]*StateToken, error) {
+// List all state tokens
+func ListStateTokens(db *gorp.DbMap) ([]*StateToken, error) {
 	if db == nil {
-		return nil, errors.New("Missing db parameter to load state tokens")
+		return nil, errors.New("Missing db parameter to list state tokens")
 	}
 
 	query, args, err := squirrel.Select(`*`).From(`"state_token"`).ToSql()

@@ -1,4 +1,4 @@
-package scenario
+package models
 
 type Scenario struct {
 	ID       int64  `json:"id" db:"id"`

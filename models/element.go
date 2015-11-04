@@ -1,4 +1,4 @@
-package element
+package models
 
 type Element struct {
 	ID          int64  `json:"-" db:"id"`

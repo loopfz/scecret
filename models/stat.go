@@ -1,4 +1,4 @@
-package stat
+package models
 
 type Stat struct {
 	ID          int64  `json:"id" db:"id"`

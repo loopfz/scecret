@@ -1,21 +1,22 @@
-package icon
+package models
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/go-gorp/gorp"
-	"github.com/loopfz/scecret/models/scenario"
 	"github.com/loopfz/scecret/utils/sqlgenerator"
 )
 
 const (
 	// Const names to be retrievable from model code
-	NORMAL_SHIELD  = "normal_shield"
-	SKULL_SHIELD   = "skull_shield"
-	HEART_SHIELD   = "heart_shield"
-	UT_SHIELD      = "ut_shield"
-	SPECIAL_SHIELD = "special_shield"
+	NORMAL_SHIELD_ICON  = "normal_shield"
+	SKULL_SHIELD_ICON   = "skull_shield"
+	HEART_SHIELD_ICON   = "heart_shield"
+	UT_SHIELD_ICON      = "ut_shield"
+	SPECIAL_SHIELD_ICON = "special_shield"
+	BLOCKING_ICON       = "blocking"
 )
 
 type Icon struct {
@@ -26,13 +27,13 @@ type Icon struct {
 }
 
 // Create an icon
-func Create(db *gorp.DbMap, scenar *scenario.Scenario, ShortName string, URL string) (*Icon, error) {
+func CreateIcon(db *gorp.DbMap, scenar *Scenario, ShortName string, URL string) (*Icon, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to create icon")
 	}
 
 	i := &Icon{
-		ShortName: ShortName,
+		ShortName: strings.TrimSpace(ShortName),
 		URL:       URL,
 	}
 
@@ -55,7 +56,7 @@ func Create(db *gorp.DbMap, scenar *scenario.Scenario, ShortName string, URL str
 
 // Load an icon from ID. If scenar parameter is non-nil it acts as a filter: only rows with id_scenario NULL or stricly equal
 // will be returned.
-func LoadFromID(db *gorp.DbMap, scenar *scenario.Scenario, ID int64) (*Icon, error) {
+func LoadIconFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Icon, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load icon")
 	}
