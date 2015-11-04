@@ -89,19 +89,19 @@ func main() {
 	createLoc(db, scenar, "Cuisine", 4)
 
 	// DORTOIR
-	_, dortoirCards := createLoc(db, scenar, "Dortoir", 4)
+	_, dortoirCards := createLoc(db, scenar, "Dortoir", 6)
 
 	// CABINET
-	cabinet, cabinetCards := createLoc(db, scenar, "Cabinet", 6)
+	cabinet, cabinetCards := createLoc(db, scenar, "Cabinet", 5)
 
 	// LABYRINTHE
-	labyrinthe, labyrintheCards := createLoc(db, scenar, "Labyrinthe", 6)
+	labyrinthe, labyrintheCards := createLoc(db, scenar, "Labyrinthe", 5)
 
 	// PARC
 	parc, parcCards := createLoc(db, scenar, "Parc", 5)
 
 	// SERRE
-	serre, serreCards := createLoc(db, scenar, "Serre", 3)
+	serre, serreCards := createLoc(db, scenar, "Serre", 4)
 
 	// TOMBEAU
 	tombeau, tombeauCards := createLoc(db, scenar, "Tombeau", 5)
@@ -113,35 +113,36 @@ func main() {
 	catacombes, catacombesCards := createLoc(db, scenar, "Catacombes", 5)
 
 	// CRYPTE
-	crypte, crypteCards := createLoc(db, scenar, "Crypte", 8)
+	crypte, crypteCards := createLoc(db, scenar, "Crypte", 7)
 
-	createLocLink(db, infirmerieCards[3], cabinet)
-	createLocLink(db, promenadeCards[3], parc)
-	createLocLink(db, dortoirCards[1], catacombes)
+	createLocLink(db, infirmerieCards[2], cabinet)
+	createLocLink(db, promenadeCards[2], parc)
+	createLocLink(db, dortoirCards[5], catacombes)
+	createLocLink(db, cabinetCards[3], parc)
 	createLocLink(db, cabinetCards[4], labyrinthe)
-	createLocLink(db, cabinetCards[5], parc)
-	createLocLink(db, labyrintheCards[5], parc)
-	createLocLink(db, parcCards[2], portePentacles)
-	createLocLink(db, parcCards[4], serre)
+	createLocLink(db, labyrintheCards[0], parc)
+	createLocLink(db, parcCards[4], portePentacles)
+	createLocLink(db, parcCards[3], serre)
 	createLocLink(db, catacombesCards[4], portePentacles)
-	createLocLink(db, portePentaclesCards[1], catacombes)
+	createLocLink(db, portePentaclesCards[1], tombeau)
 	createLocLink(db, portePentaclesCards[2], crypte)
-	createLocLink(db, portePentaclesCards[3], tombeau)
+	createLocLink(db, portePentaclesCards[3], catacombes)
 
-	createSkillTest(db, cabinetCards[4], combat, true)
+	createSkillTest(db, cabinetCards[2], combat, true)
+	createSkillTest(db, dortoirCards[4], combat, true)
 	createSkillTest(db, parcCards[1], combat, true)
-	createSkillTest(db, serreCards[2], combat, true)
+	createSkillTest(db, parcCards[4], combat, true)
+	createSkillTest(db, serreCards[3], combat, true)
 	createSkillTest(db, catacombesCards[1], combat, true)
 	createSkillTest(db, catacombesCards[3], combat, true)
 	createSkillTest(db, catacombesCards[4], combat, true)
 	createSkillTest(db, tombeauCards[1], combat, true)
 	createSkillTest(db, tombeauCards[2], combat, true)
 	createSkillTest(db, tombeauCards[3], combat, true)
-	createSkillTest(db, tombeauCards[4], combat, true)
-	createSkillTest(db, crypteCards[4], combat, true)
 	createSkillTest(db, crypteCards[5], combat, true)
+	createSkillTest(db, crypteCards[6], combat, true)
 
-	createStateTokenLink(db, infirmerieCards[4], stateToken, true)
+	createStateTokenLink(db, infirmerieCards[1], stateToken, true)
 	createStateTokenLink(db, dortoirCards[3], stateToken, false)
 
 	out, err := models.Graph(db, scenar)

@@ -49,28 +49,28 @@
             {
                 "id": 8,
                 "description": "Infirmerie - B",
-                "blocking": false
+                "blocking": false,
+                "unlocks_state_tokens": [
+                    1
+                ]
             },
             {
                 "id": 9,
                 "description": "Infirmerie - C",
-                "blocking": false
-            },
-            {
-                "id": 10,
-                "description": "Infirmerie - D",
                 "reveals": [
                     6
                 ],
                 "blocking": false
             },
             {
+                "id": 10,
+                "description": "Infirmerie - D",
+                "blocking": false
+            },
+            {
                 "id": 11,
                 "description": "Infirmerie - E",
-                "blocking": false,
-                "unlocks_state_tokens": [
-                    1
-                ]
+                "blocking": false
             }
         ]
     },
@@ -92,14 +92,14 @@
             {
                 "id": 14,
                 "description": "Promenade - C",
+                "reveals": [
+                    8
+                ],
                 "blocking": false
             },
             {
                 "id": 15,
                 "description": "Promenade - D",
-                "reveals": [
-                    8
-                ],
                 "blocking": false
             },
             {
@@ -159,9 +159,6 @@
             {
                 "id": 24,
                 "description": "Dortoir - B",
-                "reveals": [
-                    12
-                ],
                 "blocking": false
             },
             {
@@ -176,6 +173,22 @@
                 "is_unlocked_state_tokens": [
                     1
                 ]
+            },
+            {
+                "id": 27,
+                "description": "Dortoir - E",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 28,
+                "description": "Dortoir - F",
+                "reveals": [
+                    12
+                ],
+                "blocking": false
             }
         ]
     },
@@ -185,31 +198,18 @@
         "hidden": true,
         "cards": [
             {
-                "id": 27,
+                "id": 29,
                 "description": "Cabinet - A",
                 "blocking": false
             },
             {
-                "id": 28,
+                "id": 30,
                 "description": "Cabinet - B",
                 "blocking": false
             },
             {
-                "id": 29,
-                "description": "Cabinet - C",
-                "blocking": false
-            },
-            {
-                "id": 30,
-                "description": "Cabinet - D",
-                "blocking": false
-            },
-            {
                 "id": 31,
-                "description": "Cabinet - E",
-                "reveals": [
-                    7
-                ],
+                "description": "Cabinet - C",
                 "blocking": true,
                 "skill_tests": [
                     1
@@ -217,9 +217,17 @@
             },
             {
                 "id": 32,
-                "description": "Cabinet - F",
+                "description": "Cabinet - D",
                 "reveals": [
                     8
+                ],
+                "blocking": false
+            },
+            {
+                "id": 33,
+                "description": "Cabinet - E",
+                "reveals": [
+                    7
                 ],
                 "blocking": false
             }
@@ -231,36 +239,31 @@
         "hidden": true,
         "cards": [
             {
-                "id": 33,
-                "description": "Labyrinthe - A",
-                "blocking": false
-            },
-            {
                 "id": 34,
-                "description": "Labyrinthe - B",
+                "description": "Labyrinthe - A",
+                "reveals": [
+                    8
+                ],
                 "blocking": false
             },
             {
                 "id": 35,
-                "description": "Labyrinthe - C",
+                "description": "Labyrinthe - B",
                 "blocking": false
             },
             {
                 "id": 36,
-                "description": "Labyrinthe - D",
+                "description": "Labyrinthe - C",
                 "blocking": false
             },
             {
                 "id": 37,
-                "description": "Labyrinthe - E",
+                "description": "Labyrinthe - D",
                 "blocking": false
             },
             {
                 "id": 38,
-                "description": "Labyrinthe - F",
-                "reveals": [
-                    8
-                ],
+                "description": "Labyrinthe - E",
                 "blocking": false
             }
         ]
@@ -286,23 +289,26 @@
             {
                 "id": 41,
                 "description": "Parc - C",
-                "reveals": [
-                    11
-                ],
                 "blocking": false
             },
             {
                 "id": 42,
                 "description": "Parc - D",
+                "reveals": [
+                    9
+                ],
                 "blocking": false
             },
             {
                 "id": 43,
                 "description": "Parc - E",
                 "reveals": [
-                    9
+                    11
                 ],
-                "blocking": false
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
             }
         ]
     },
@@ -324,6 +330,11 @@
             {
                 "id": 46,
                 "description": "Serre - C",
+                "blocking": false
+            },
+            {
+                "id": 47,
+                "description": "Serre - D",
                 "blocking": true,
                 "skill_tests": [
                     1
@@ -337,12 +348,12 @@
         "hidden": true,
         "cards": [
             {
-                "id": 47,
+                "id": 48,
                 "description": "Tombeau - A",
                 "blocking": false
             },
             {
-                "id": 48,
+                "id": 49,
                 "description": "Tombeau - B",
                 "blocking": true,
                 "skill_tests": [
@@ -350,7 +361,7 @@
                 ]
             },
             {
-                "id": 49,
+                "id": 50,
                 "description": "Tombeau - C",
                 "blocking": true,
                 "skill_tests": [
@@ -358,7 +369,7 @@
                 ]
             },
             {
-                "id": 50,
+                "id": 51,
                 "description": "Tombeau - D",
                 "blocking": true,
                 "skill_tests": [
@@ -366,12 +377,9 @@
                 ]
             },
             {
-                "id": 51,
+                "id": 52,
                 "description": "Tombeau - E",
-                "blocking": true,
-                "skill_tests": [
-                    1
-                ]
+                "blocking": false
             }
         ]
     },
@@ -381,20 +389,20 @@
         "hidden": true,
         "cards": [
             {
-                "id": 52,
+                "id": 53,
                 "description": "Porte pentacles - A",
                 "blocking": false
             },
             {
-                "id": 53,
+                "id": 54,
                 "description": "Porte pentacles - B",
                 "reveals": [
-                    12
+                    10
                 ],
                 "blocking": false
             },
             {
-                "id": 54,
+                "id": 55,
                 "description": "Porte pentacles - C",
                 "reveals": [
                     13
@@ -402,10 +410,10 @@
                 "blocking": false
             },
             {
-                "id": 55,
+                "id": 56,
                 "description": "Porte pentacles - D",
                 "reveals": [
-                    10
+                    12
                 ],
                 "blocking": false
             }
@@ -417,12 +425,12 @@
         "hidden": true,
         "cards": [
             {
-                "id": 56,
+                "id": 57,
                 "description": "Catacombes - A",
                 "blocking": false
             },
             {
-                "id": 57,
+                "id": 58,
                 "description": "Catacombes - B",
                 "blocking": true,
                 "skill_tests": [
@@ -430,12 +438,12 @@
                 ]
             },
             {
-                "id": 58,
+                "id": 59,
                 "description": "Catacombes - C",
                 "blocking": false
             },
             {
-                "id": 59,
+                "id": 60,
                 "description": "Catacombes - D",
                 "blocking": true,
                 "skill_tests": [
@@ -443,7 +451,7 @@
                 ]
             },
             {
-                "id": 60,
+                "id": 61,
                 "description": "Catacombes - E",
                 "reveals": [
                     11
@@ -461,35 +469,32 @@
         "hidden": true,
         "cards": [
             {
-                "id": 61,
+                "id": 62,
                 "description": "Crypte - A",
                 "blocking": false
             },
             {
-                "id": 62,
+                "id": 63,
                 "description": "Crypte - B",
                 "blocking": false
             },
             {
-                "id": 63,
+                "id": 64,
                 "description": "Crypte - C",
                 "blocking": false
             },
             {
-                "id": 64,
+                "id": 65,
                 "description": "Crypte - D",
                 "blocking": false
             },
             {
-                "id": 65,
+                "id": 66,
                 "description": "Crypte - E",
-                "blocking": true,
-                "skill_tests": [
-                    1
-                ]
+                "blocking": false
             },
             {
-                "id": 66,
+                "id": 67,
                 "description": "Crypte - F",
                 "blocking": true,
                 "skill_tests": [
@@ -497,14 +502,12 @@
                 ]
             },
             {
-                "id": 67,
-                "description": "Crypte - G",
-                "blocking": false
-            },
-            {
                 "id": 68,
-                "description": "Crypte - H",
-                "blocking": false
+                "description": "Crypte - G",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
             }
         ]
     }
