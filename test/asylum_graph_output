@@ -1,0 +1,505 @@
+[
+    {
+        "id": 1,
+        "name": "Repos",
+        "hidden": false,
+        "cards": [
+            {
+                "id": 1,
+                "description": "Repos - A",
+                "blocking": false
+            },
+            {
+                "id": 2,
+                "description": "Repos - B",
+                "blocking": false
+            },
+            {
+                "id": 3,
+                "description": "Repos - C",
+                "blocking": false
+            },
+            {
+                "id": 4,
+                "description": "Repos - D",
+                "blocking": false
+            },
+            {
+                "id": 5,
+                "description": "Repos - E",
+                "blocking": false
+            },
+            {
+                "id": 6,
+                "description": "Repos - F",
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Infirmerie",
+        "hidden": false,
+        "cards": [
+            {
+                "id": 7,
+                "description": "Infirmerie - A",
+                "blocking": false
+            },
+            {
+                "id": 8,
+                "description": "Infirmerie - B",
+                "blocking": false
+            },
+            {
+                "id": 9,
+                "description": "Infirmerie - C",
+                "blocking": false
+            },
+            {
+                "id": 10,
+                "description": "Infirmerie - D",
+                "reveals": [
+                    6
+                ],
+                "blocking": false
+            },
+            {
+                "id": 11,
+                "description": "Infirmerie - E",
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Promenade",
+        "hidden": false,
+        "cards": [
+            {
+                "id": 12,
+                "description": "Promenade - A",
+                "blocking": false
+            },
+            {
+                "id": 13,
+                "description": "Promenade - B",
+                "blocking": false
+            },
+            {
+                "id": 14,
+                "description": "Promenade - C",
+                "blocking": false
+            },
+            {
+                "id": 15,
+                "description": "Promenade - D",
+                "reveals": [
+                    8
+                ],
+                "blocking": false
+            },
+            {
+                "id": 16,
+                "description": "Promenade - E",
+                "blocking": false
+            },
+            {
+                "id": 17,
+                "description": "Promenade - F",
+                "blocking": false
+            },
+            {
+                "id": 18,
+                "description": "Promenade - G",
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Cuisine",
+        "hidden": false,
+        "cards": [
+            {
+                "id": 19,
+                "description": "Cuisine - A",
+                "blocking": false
+            },
+            {
+                "id": 20,
+                "description": "Cuisine - B",
+                "blocking": false
+            },
+            {
+                "id": 21,
+                "description": "Cuisine - C",
+                "blocking": false
+            },
+            {
+                "id": 22,
+                "description": "Cuisine - D",
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Dortoir",
+        "hidden": false,
+        "cards": [
+            {
+                "id": 23,
+                "description": "Dortoir - A",
+                "blocking": false
+            },
+            {
+                "id": 24,
+                "description": "Dortoir - B",
+                "reveals": [
+                    12
+                ],
+                "blocking": false
+            },
+            {
+                "id": 25,
+                "description": "Dortoir - C",
+                "blocking": false
+            },
+            {
+                "id": 26,
+                "description": "Dortoir - D",
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Cabinet",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 27,
+                "description": "Cabinet - A",
+                "blocking": false
+            },
+            {
+                "id": 28,
+                "description": "Cabinet - B",
+                "blocking": false
+            },
+            {
+                "id": 29,
+                "description": "Cabinet - C",
+                "blocking": false
+            },
+            {
+                "id": 30,
+                "description": "Cabinet - D",
+                "blocking": false
+            },
+            {
+                "id": 31,
+                "description": "Cabinet - E",
+                "reveals": [
+                    7
+                ],
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 32,
+                "description": "Cabinet - F",
+                "reveals": [
+                    8
+                ],
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Labyrinthe",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 33,
+                "description": "Labyrinthe - A",
+                "blocking": false
+            },
+            {
+                "id": 34,
+                "description": "Labyrinthe - B",
+                "blocking": false
+            },
+            {
+                "id": 35,
+                "description": "Labyrinthe - C",
+                "blocking": false
+            },
+            {
+                "id": 36,
+                "description": "Labyrinthe - D",
+                "blocking": false
+            },
+            {
+                "id": 37,
+                "description": "Labyrinthe - E",
+                "blocking": false
+            },
+            {
+                "id": 38,
+                "description": "Labyrinthe - F",
+                "reveals": [
+                    8
+                ],
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Parc",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 39,
+                "description": "Parc - A",
+                "blocking": false
+            },
+            {
+                "id": 40,
+                "description": "Parc - B",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 41,
+                "description": "Parc - C",
+                "reveals": [
+                    11
+                ],
+                "blocking": false
+            },
+            {
+                "id": 42,
+                "description": "Parc - D",
+                "blocking": false
+            },
+            {
+                "id": 43,
+                "description": "Parc - E",
+                "reveals": [
+                    9
+                ],
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Serre",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 44,
+                "description": "Serre - A",
+                "blocking": false
+            },
+            {
+                "id": 45,
+                "description": "Serre - B",
+                "blocking": false
+            },
+            {
+                "id": 46,
+                "description": "Serre - C",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Tombeau",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 47,
+                "description": "Tombeau - A",
+                "blocking": false
+            },
+            {
+                "id": 48,
+                "description": "Tombeau - B",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 49,
+                "description": "Tombeau - C",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 50,
+                "description": "Tombeau - D",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 51,
+                "description": "Tombeau - E",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Porte pentacles",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 52,
+                "description": "Porte pentacles - A",
+                "blocking": false
+            },
+            {
+                "id": 53,
+                "description": "Porte pentacles - B",
+                "reveals": [
+                    12
+                ],
+                "blocking": false
+            },
+            {
+                "id": 54,
+                "description": "Porte pentacles - C",
+                "reveals": [
+                    13
+                ],
+                "blocking": false
+            },
+            {
+                "id": 55,
+                "description": "Porte pentacles - D",
+                "reveals": [
+                    10
+                ],
+                "blocking": false
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Catacombes",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 56,
+                "description": "Catacombes - A",
+                "blocking": false
+            },
+            {
+                "id": 57,
+                "description": "Catacombes - B",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 58,
+                "description": "Catacombes - C",
+                "blocking": false
+            },
+            {
+                "id": 59,
+                "description": "Catacombes - D",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 60,
+                "description": "Catacombes - E",
+                "reveals": [
+                    11
+                ],
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Crypte",
+        "hidden": true,
+        "cards": [
+            {
+                "id": 61,
+                "description": "Crypte - A",
+                "blocking": false
+            },
+            {
+                "id": 62,
+                "description": "Crypte - B",
+                "blocking": false
+            },
+            {
+                "id": 63,
+                "description": "Crypte - C",
+                "blocking": false
+            },
+            {
+                "id": 64,
+                "description": "Crypte - D",
+                "blocking": false
+            },
+            {
+                "id": 65,
+                "description": "Crypte - E",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 66,
+                "description": "Crypte - F",
+                "blocking": true,
+                "skill_tests": [
+                    1
+                ]
+            },
+            {
+                "id": 67,
+                "description": "Crypte - G",
+                "blocking": false
+            },
+            {
+                "id": 68,
+                "description": "Crypte - H",
+                "blocking": false
+            }
+        ]
+    }
+]

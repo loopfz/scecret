@@ -106,6 +106,9 @@ func addSkillTestIcons(db *gorp.DbMap, c *Card, linkedStat *Stat, st *SkillTest,
 	// Add blocking icon
 	if Blocking {
 		ico, err := LoadBaseIconFromShortName(db, BLOCKING_ICON)
+		if err != nil {
+			return err
+		}
 		_, err = c.CreateCardIcon(db, ico, true, /* FRONT */
 			offsetX, 0, DEFAULT_SIZE_X, DEFAULT_SIZE_Y, "", 0, st, nil)
 		if err != nil {

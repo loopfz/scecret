@@ -24,8 +24,11 @@ func CreateLocationLink(db *gorp.DbMap, card *Card, loc *Location) (*LocationLin
 	}
 
 	if !loc.Hidden {
-		// TODO set Hidden = true
 		// If the location needs to be revealed by another card, it is hidden.
+		err := loc.Update(db, loc.Name, true)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	ll := &LocationLink{
@@ -36,7 +39,7 @@ func CreateLocationLink(db *gorp.DbMap, card *Card, loc *Location) (*LocationLin
 
 	err := db.Insert(ll)
 	if err != nil {
-		return nil, err
+		return nil, err // TODO Tx
 	}
 
 	return ll, nil

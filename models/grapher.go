@@ -3,20 +3,20 @@ package models
 import "github.com/go-gorp/gorp"
 
 type LocGraph struct {
-	ID     int64
-	Name   string
-	Hidden bool
-	Cards  []*CardGraph
+	ID     int64        `json:"id"`
+	Name   string       `json:"name"`
+	Hidden bool         `json:"hidden"`
+	Cards  []*CardGraph `json:"cards,omitempty"`
 }
 
 type CardGraph struct {
-	ID                    int64
-	Description           string
-	Reveals               []int64
-	Blocking              bool
-	UnlockStateTokens     []int64
-	IsUnlockedStateTokens []int64
-	SkillTests            []int64
+	ID                    int64   `json:"id"`
+	Description           string  `json:"description"`
+	Reveals               []int64 `json:"reveals,omitempty"`
+	Blocking              bool    `json:"blocking"`
+	UnlockStateTokens     []int64 `json:"unlocks_state_tokens,omitempty"`
+	IsUnlockedStateTokens []int64 `json:"is_unlocked_state_tokens,omitempty"`
+	SkillTests            []int64 `json:"skill_tests,omitempty"`
 }
 
 func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
@@ -30,8 +30,7 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 	cards := make(map[int64]*CardGraph)
 
 	for _, loc := range locations {
-		// TODO loc_cards, err := loc.GetCards(db)
-		var loc_cards []*Card
+		loc_cards, err := loc.GetCards(db)
 		if err != nil {
 			return nil, err
 		}
@@ -40,6 +39,7 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 			Name:   loc.Name,
 			Hidden: loc.Hidden,
 		}
+		locGraphOut = append(locGraphOut, locG)
 		for _, c := range loc_cards {
 			cG := &CardGraph{
 				ID:          c.ID,

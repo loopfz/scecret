@@ -1,6 +1,8 @@
 package models
 
 import (
+	"database/sql/driver"
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -40,7 +42,7 @@ type Card struct {
 // CardFace describes the Front or Back non-image components of a card.
 // It is stored as JSON to allow flexibility / evolution in the definition.
 type CardFace struct {
-	TextAreaSize int
+	TextAreaSize int         `json:"text_area_size"`
 	TextFields   []TextField `json:"text_fields"`
 }
 
@@ -340,4 +342,23 @@ func (ci *CardIcon) Valid() error {
 		return errors.New("References to both skill_test and state_token_link")
 	}
 	return nil
+}
+
+func (cf *CardFace) Scan(value interface{}) error {
+	if value == nil {
+		return nil
+	}
+	s := value.([]byte)
+	return json.Unmarshal(s, &cf)
+}
+
+func (cf *CardFace) Value() (driver.Value, error) {
+	if cf == nil {
+		return nil, nil
+	}
+	j, err := json.Marshal(cf)
+	if err != nil {
+		return nil, err
+	}
+	return j, nil
 }

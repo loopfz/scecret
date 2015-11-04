@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/Masterminds/squirrel"
@@ -18,9 +19,9 @@ type Location struct {
 	Hidden     bool   `json:"json:"hidden" db:"hidden"`
 }
 
-// LocationCards represents the cards contained in a location.
+// LocationCard represents the cards contained in a location.
 // Decoupled from Location to allow things like multiple "A" locations
-type LocationCards struct {
+type LocationCard struct {
 	ID         int64  `json:"id" db:"id"`
 	IDLocation int64  `json:"id_location" db:"id_location"`
 	IDCard     int64  `json:"id_card" db:"id_card"`
@@ -154,4 +155,63 @@ func (loc *Location) Valid() error {
 		return errors.New("Empty location name")
 	}
 	return nil
+}
+
+// Create a link between a card and a location.
+func (loc *Location) CreateLocationCard(db *gorp.DbMap, scenar *Scenario, letter string) (*LocationCard, error) {
+	if db == nil {
+		return nil, errors.New("Missing db parameter to create location card")
+	}
+
+	cardDesc := fmt.Sprintf("%s - %s", loc.Name, letter)
+	card, err := CreateCard(db, scenar, 0, cardDesc, &CardFace{}, &CardFace{})
+	if err != nil {
+		return nil, err
+	}
+
+	lc := &LocationCard{
+		IDCard:     card.ID,
+		IDLocation: loc.ID,
+		Letter:     strings.ToUpper(letter),
+	}
+
+	err = lc.Valid()
+	if err != nil {
+		return nil, err // TODO Tx
+	}
+
+	err = db.Insert(lc)
+	if err != nil {
+		return nil, err // TODO Tx
+	}
+
+	return lc, nil
+}
+
+// Verify that a LocationCard is valid before creating/updating it.
+func (lc *LocationCard) Valid() error {
+	letters := []string{"A", "B", "C", "D", "E", "F", "G", "H"}
+	ok := false
+	for _, l := range letters {
+		if lc.Letter == l {
+			ok = true
+		}
+	}
+	if !ok {
+		return fmt.Errorf("Invalid location letter: %s", lc.Letter)
+	}
+	return nil
+}
+
+// TEMP
+func (loc *Location) GetCards(db *gorp.DbMap) ([]*Card, error) {
+
+	var c []*Card
+
+	_, err := db.Select(&c, `SELECT card.* from "card" JOIN location_card ON card.id = location_card.id_card WHERE location_card.id_location = $1`, loc.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return c, nil
 }
