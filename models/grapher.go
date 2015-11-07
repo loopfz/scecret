@@ -50,6 +50,35 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 		}
 	}
 
+	elemToCard := make(map[int64]int64)
+	elemCards := make(map[int64]*Card)
+	elems, err := GetElementCards(db, scenar)
+	if err != nil {
+		return nil, err
+	}
+	for _, elem := range elems {
+		elemCards[elem.ID] = elem
+	}
+	elemLink, err := ListElementLinks(db, scenar, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+	for _, el := range elemLink {
+		if el.GivesUses {
+			c, ok := elemCards[el.IDElement]
+			if !ok {
+				continue
+			}
+			// This allows backtracking:
+			// card c.ID (element card) IS GIVEN BY el.IDCard
+			// if el.IDCard represents an element card too,
+			// its origin cab be recursively found too
+			// until we reach a location card, which we will design as the actual origin
+			// to abstract elements out of this graph
+			elemToCard[c.ID] = el.IDCard
+		}
+	}
+
 	stateTk, err := ListStateTokenLinks(db, scenar, nil)
 	if err != nil {
 		return nil, err
@@ -73,7 +102,12 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 	for _, ll := range locLink {
 		c, ok := cards[ll.IDCard]
 		if !ok {
-			continue
+			initialLocationCard := recurseElementLinks(ll.IDCard, elemToCard)
+			c, ok = cards[initialLocationCard]
+			if !ok {
+				// Could not backtrack to an initial location card
+				continue
+			}
 		}
 		c.Reveals = append(c.Reveals, ll.IDLocation)
 	}
@@ -94,4 +128,18 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 	}
 
 	return locGraphOut, nil
+}
+
+func recurseElementLinks(IDCard int64, elemToCard map[int64]int64) int64 {
+	var i int64
+	ok := true
+	retID := IDCard
+
+	for ok {
+		i, ok = elemToCard[retID]
+		if ok {
+			retID = i
+		}
+	}
+	return retID
 }

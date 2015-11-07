@@ -29,7 +29,7 @@ type StateTokenLink struct {
 // This will also create a CardIcon object representing the state token
 // on either the front or the back of the card (depending on if it unlocks / is unlocked).
 func CreateStateTokenLink(db *gorp.DbMap, card *Card, tk *StateToken, UnlocksUnlocked bool) (*StateTokenLink, error) {
-	if db == nil || tk == nil {
+	if db == nil || tk == nil || card == nil {
 		return nil, errors.New("Missing parameters to create card link")
 	}
 
@@ -64,7 +64,7 @@ func CreateStateTokenLink(db *gorp.DbMap, card *Card, tk *StateToken, UnlocksUnl
 // List state token links, with filters.
 func ListStateTokenLinks(db *gorp.DbMap, scenar *Scenario, card *Card) ([]*StateTokenLink, error) {
 	if db == nil {
-		return nil, errors.New("Missing db parameter to load card links")
+		return nil, errors.New("Missing db parameter to load state token links")
 	}
 
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"state_token_link"`)

@@ -19,8 +19,8 @@ type LocationLink struct {
 
 // Create a link between a card and a location.
 func CreateLocationLink(db *gorp.DbMap, card *Card, loc *Location) (*LocationLink, error) {
-	if db == nil {
-		return nil, errors.New("Missing db parameter to create location link")
+	if db == nil || card == nil || loc == nil {
+		return nil, errors.New("Missing parameters to create location link")
 	}
 
 	if !loc.Hidden {
@@ -48,7 +48,7 @@ func CreateLocationLink(db *gorp.DbMap, card *Card, loc *Location) (*LocationLin
 // List location links, with filters.
 func ListLocationLinks(db *gorp.DbMap, scenar *Scenario, card *Card, loc *Location) ([]*LocationLink, error) {
 	if db == nil {
-		return nil, errors.New("Missing db parameter to load card links")
+		return nil, errors.New("Missing db parameter to load location links")
 	}
 
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"location_link"`)

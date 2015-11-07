@@ -30,6 +30,7 @@ func main() {
 	db.AddTableWithName(models.Card{}, `card`).SetKeys(true, "id")
 	db.AddTableWithName(models.CardIcon{}, `card_icon`).SetKeys(true, "id")
 	db.AddTableWithName(models.Element{}, `element`).SetKeys(true, "id")
+	db.AddTableWithName(models.ElementLink{}, `element_link`).SetKeys(true, "id")
 	db.AddTableWithName(models.Icon{}, `icon`).SetKeys(true, "id")
 	db.AddTableWithName(models.StateToken{}, `state_token`).SetKeys(true, "id")
 	db.AddTableWithName(models.StateTokenLink{}, `state_token_link`).SetKeys(true, "id")
@@ -42,6 +43,15 @@ func main() {
 	}
 
 	scenar, err := models.CreateScenario(db, "Asylum", &models.User{})
+	if err != nil {
+		panic(err)
+	}
+
+	elemDortoirMap, err := models.CreateElement(db, scenar, 1, "Plan vers le cabinet")
+	if err != nil {
+		panic(err)
+	}
+	elemDortoirMapCard, err := models.LoadCardFromID(db, scenar, elemDortoirMap.IDCard)
 	if err != nil {
 		panic(err)
 	}
@@ -115,9 +125,15 @@ func main() {
 	// CRYPTE
 	crypte, crypteCards := createLoc(db, scenar, "Crypte", 7)
 
+	_, err = models.CreateElementLink(db, elemDortoirMap, dortoirCards[5], true)
+	if err != nil {
+		panic(err)
+	}
+
 	createLocLink(db, infirmerieCards[2], cabinet)
 	createLocLink(db, promenadeCards[2], parc)
-	createLocLink(db, dortoirCards[5], catacombes)
+	//createLocLink(db, dortoirCards[5], catacombes)
+	createLocLink(db, elemDortoirMapCard, catacombes)
 	createLocLink(db, cabinetCards[3], parc)
 	createLocLink(db, cabinetCards[4], labyrinthe)
 	createLocLink(db, labyrintheCards[0], parc)
