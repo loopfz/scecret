@@ -53,6 +53,38 @@ func CreateIcon(db *gorp.DbMap, scenar *Scenario, ShortName string, URL string) 
 	return i, nil
 }
 
+// List icons, optionally filtered by scenario.
+func ListIcons(db *gorp.DbMap, scenar *Scenario) ([]*Icon, error) {
+	if db == nil {
+		return nil, errors.New("Missing db parameter to list icons")
+	}
+
+	selector := sqlgenerator.PGsql.Select(`*`).From(`"icon"`)
+
+	if scenar != nil {
+		selector.Where(
+			squirrel.Or{
+				squirrel.Eq{`id_scenario`: nil},
+				squirrel.Eq{`id_scenario`: scenar.ID},
+			},
+		)
+	}
+
+	query, args, err := selector.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var ico []*Icon
+
+	_, err = db.Select(&ico, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return ico, nil
+}
+
 // Load an icon from ID. If scenar parameter is non-nil it acts as a filter: only rows with id_scenario NULL or stricly equal
 // will be returned.
 func LoadIconFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Icon, error) {

@@ -37,13 +37,13 @@ The features:
         ...
 
 The progress:
-    - Model objects: 85%
+    - Model objects: 90%
         Generic card done
         Location done
         Element done
         Metadata done: state_token_link, location_link, element_link, skill_test
         Graph generation done for scenario view (summary of relations between all location cards)
-        Next: Stat, Icon
+        Stat done, Icon done
         In a second step: Receptacle, MissionSuccess, Codex, Plan (nothing special to do, mostly generic cards)
     - API handlers: 0%
         TODO
