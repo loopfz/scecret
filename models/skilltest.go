@@ -22,7 +22,6 @@ type SkillTest struct {
 	IDScenario     int64 `json:"-" db:"id_scenario"`
 	IDCard         int64 `json:"id_card" db:"id_card"`
 	IDStat         int64 `json:"id_stat" db:"id_stat"`
-	Blocking       bool  `json:"blocking" db:"blocking"`
 	NormalShields  uint  `json:"normal_shields" db:"normal_shields"`
 	SkullShields   uint  `json:"skull_shields" db:"skull_shields"`
 	HeartShields   uint  `json:"heart_shields" db:"heart_shields"`
@@ -32,7 +31,7 @@ type SkillTest struct {
 
 // Create a skill test.
 // This will also create CardIcon objects on the Front of the Card, for the statistic itself and each of the present shields.
-func CreateSkillTest(db *gorp.DbMap, card *Card, linkedStat *Stat, Blocking bool, NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) (*SkillTest, error) {
+func CreateSkillTest(db *gorp.DbMap, card *Card, linkedStat *Stat, NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) (*SkillTest, error) {
 	if db == nil || linkedStat == nil {
 		return nil, errors.New("Missing parameters to create skill test")
 	}
@@ -41,7 +40,6 @@ func CreateSkillTest(db *gorp.DbMap, card *Card, linkedStat *Stat, Blocking bool
 		IDScenario:     card.IDScenario,
 		IDCard:         card.ID,
 		IDStat:         linkedStat.ID,
-		Blocking:       Blocking,
 		NormalShields:  NormalShields,
 		SkullShields:   SkullShields,
 		HeartShields:   HeartShields,
@@ -58,7 +56,7 @@ func CreateSkillTest(db *gorp.DbMap, card *Card, linkedStat *Stat, Blocking bool
 		return nil, err
 	}
 
-	err = addSkillTestIcons(db, card, linkedStat, st, Blocking,
+	err = addSkillTestIcons(db, card, linkedStat, st,
 		NormalShields, SkullShields, HeartShields, UTShields, SpecialShields)
 	if err != nil {
 		return nil, err // TODO Tx
@@ -67,7 +65,7 @@ func CreateSkillTest(db *gorp.DbMap, card *Card, linkedStat *Stat, Blocking bool
 	return st, nil
 }
 
-func addSkillTestIcons(db *gorp.DbMap, c *Card, linkedStat *Stat, st *SkillTest, Blocking bool,
+func addSkillTestIcons(db *gorp.DbMap, c *Card, linkedStat *Stat, st *SkillTest,
 	NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) error {
 	// Add shield CardIcons
 	offsetX, err := addShieldCardIcon(db, c, 0, NormalShields, NORMAL_SHIELD_ICON, st)
@@ -102,19 +100,6 @@ func addSkillTestIcons(db *gorp.DbMap, c *Card, linkedStat *Stat, st *SkillTest,
 		return err
 	}
 	offsetX += DEFAULT_SIZE_X
-
-	// Add blocking icon
-	if Blocking {
-		ico, err := LoadBaseIconFromShortName(db, BLOCKING_ICON)
-		if err != nil {
-			return err
-		}
-		_, err = c.CreateCardIcon(db, ico, true, /* FRONT */
-			offsetX, 0, DEFAULT_SIZE_X, DEFAULT_SIZE_Y, "", 0, st, nil)
-		if err != nil {
-			return err
-		}
-	}
 
 	return nil
 }
@@ -210,13 +195,12 @@ func LoadSkillTestByID(db *gorp.DbMap, scenar *Scenario, IDSkillTest int64) (*Sk
 // This will also create CardIcon objects on the Front of the Card, for the statistic itself and each of the present shields.
 // The card parameter CANNOT overwrite the card associated with the SkillTest, it is permanent.
 // It is passed only to be able to retrieve the associated CardIcon objects.
-func (st *SkillTest) Update(db *gorp.DbMap, card *Card, linkedStat *Stat, Blocking bool, NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) error {
+func (st *SkillTest) Update(db *gorp.DbMap, card *Card, linkedStat *Stat, NormalShields, SkullShields, HeartShields, UTShields, SpecialShields uint) error {
 	if db == nil || linkedStat == nil {
 		return errors.New("Missing parameters to update skill test")
 	}
 
 	st.IDStat = linkedStat.ID
-	st.Blocking = Blocking
 	st.NormalShields = NormalShields
 	st.SkullShields = SkullShields
 	st.HeartShields = HeartShields
@@ -241,7 +225,7 @@ func (st *SkillTest) Update(db *gorp.DbMap, card *Card, linkedStat *Stat, Blocki
 		return err // TODO Tx
 	}
 	// Recreate new icons
-	err = addSkillTestIcons(db, card, linkedStat, st, Blocking,
+	err = addSkillTestIcons(db, card, linkedStat, st,
 		NormalShields, SkullShields, HeartShields, UTShields, SpecialShields)
 	if err != nil {
 		return err // TODO Tx

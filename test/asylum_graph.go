@@ -62,11 +62,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	blockingIcon := &models.Icon{ShortName: models.BLOCKING_ICON}
-	err = db.Insert(blockingIcon)
-	if err != nil {
-		panic(err)
-	}
 	stateTokenIcon := &models.Icon{ShortName: "STATE_TOKEN_TEST"}
 	err = db.Insert(stateTokenIcon)
 	if err != nil {
@@ -144,19 +139,19 @@ func main() {
 	createLocLink(db, portePentaclesCards[2], crypte)
 	createLocLink(db, portePentaclesCards[3], catacombes)
 
-	createSkillTest(db, cabinetCards[2], combat, true)
-	createSkillTest(db, dortoirCards[4], combat, true)
-	createSkillTest(db, parcCards[1], combat, true)
-	createSkillTest(db, parcCards[4], combat, true)
-	createSkillTest(db, serreCards[3], combat, true)
-	createSkillTest(db, catacombesCards[1], combat, true)
-	createSkillTest(db, catacombesCards[3], combat, true)
-	createSkillTest(db, catacombesCards[4], combat, true)
-	createSkillTest(db, tombeauCards[1], combat, true)
-	createSkillTest(db, tombeauCards[2], combat, true)
-	createSkillTest(db, tombeauCards[3], combat, true)
-	createSkillTest(db, crypteCards[5], combat, true)
-	createSkillTest(db, crypteCards[6], combat, true)
+	createSkillTest(db, cabinetCards[2], combat)
+	createSkillTest(db, dortoirCards[4], combat)
+	createSkillTest(db, parcCards[1], combat)
+	createSkillTest(db, parcCards[4], combat)
+	createSkillTest(db, serreCards[3], combat)
+	createSkillTest(db, catacombesCards[1], combat)
+	createSkillTest(db, catacombesCards[3], combat)
+	createSkillTest(db, catacombesCards[4], combat)
+	createSkillTest(db, tombeauCards[1], combat)
+	createSkillTest(db, tombeauCards[2], combat)
+	createSkillTest(db, tombeauCards[3], combat)
+	createSkillTest(db, crypteCards[5], combat)
+	createSkillTest(db, crypteCards[6], combat)
 
 	createStateTokenLink(db, infirmerieCards[1], stateToken, true)
 	createStateTokenLink(db, dortoirCards[3], stateToken, false)
@@ -205,8 +200,8 @@ func createLocLink(db *gorp.DbMap, card *models.Card, loc *models.Location) {
 	}
 }
 
-func createSkillTest(db *gorp.DbMap, card *models.Card, stat *models.Stat, blocking bool) {
-	_, err := models.CreateSkillTest(db, card, stat, blocking, 0, 0, 0, 0, 0)
+func createSkillTest(db *gorp.DbMap, card *models.Card, stat *models.Stat) {
+	_, err := models.CreateSkillTest(db, card, stat, 0, 0, 0, 0, 0)
 	if err != nil {
 		panic(err)
 	}

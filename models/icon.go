@@ -16,7 +16,6 @@ const (
 	HEART_SHIELD_ICON   = "heart_shield"
 	UT_SHIELD_ICON      = "ut_shield"
 	SPECIAL_SHIELD_ICON = "special_shield"
-	BLOCKING_ICON       = "blocking"
 )
 
 type Icon struct {

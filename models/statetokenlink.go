@@ -121,7 +121,7 @@ func LoadStateTokenLinkByID(db *gorp.DbMap, scenar *Scenario, ID int64) (*StateT
 }
 
 // TODO delete?
-// Update a card link.
+// Update a state token link.
 // This will also create a CardIcon object representing the state token
 // on either the front or the back of the card (depending on if it unlocks / is unlocked).
 // The card parameter CANNOT overwrite the card associated with the StateTokenLink, it is permanent.

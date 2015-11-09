@@ -13,7 +13,6 @@ type CardGraph struct {
 	ID                    int64   `json:"id"`
 	Description           string  `json:"description"`
 	Reveals               []int64 `json:"reveals,omitempty"`
-	Blocking              bool    `json:"blocking"`
 	UnlockStateTokens     []int64 `json:"unlocks_state_tokens,omitempty"`
 	IsUnlockedStateTokens []int64 `json:"is_unlocked_state_tokens,omitempty"`
 	SkillTests            []int64 `json:"skill_tests,omitempty"`
@@ -120,9 +119,6 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 		c, ok := cards[st.IDCard]
 		if !ok {
 			continue
-		}
-		if st.Blocking {
-			c.Blocking = true
 		}
 		c.SkillTests = append(c.SkillTests, st.IDStat)
 	}
