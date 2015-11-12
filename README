@@ -37,7 +37,7 @@ The features:
         ...
 
 The progress:
-    - Model objects: 90%
+    - Model objects: 80%
         Generic card done
         Location done
         Element done
@@ -45,8 +45,10 @@ The progress:
         Graph generation done for scenario view (summary of relations between all location cards)
         Stat done, Icon done
         In a second step: Receptacle, MissionSuccess, Codex, Plan (nothing special to do, mostly generic cards)
-    - API handlers: 0%
-        TODO
+    - API handlers: 70%
+        Location, element, metadata done
+        TODO soon: card
+        In a second step: Receptacle, MissionSuccess, Codex, Plan ...
     - PDF generation: 0%
         TODO
     - Website front-end: 0%
