@@ -109,7 +109,8 @@ func main() {
 	router.PUT("/scenario/:scenario/card/:card/icon/:icon", tonic.Handler(UpdateCardIcon, 200))
 	router.DELETE("/scenario/:scenario/card/:card/icon/:icon", tonic.Handler(DeleteCardIcon, 204))
 
-	// TODO POST /sandbox
+	// Sandbox
+	router.POST("/sandbox", tonic.Handler(NewSandbox, 201))
 
 	router.Run(":8080")
 }

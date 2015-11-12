@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/loopfz/scecret/auth"
 	"github.com/loopfz/scecret/models"
@@ -33,7 +31,6 @@ func ListScenarios(c *gin.Context) ([]*models.Scenario, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("User: %s\n", u.Email)
 
 	return models.ListScenarios(db, u)
 }
