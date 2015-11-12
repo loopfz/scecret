@@ -97,10 +97,12 @@ func main() {
 	router.PUT("/scenario/:scenario/element/:element", tonic.Handler(UpdateElement, 200))
 	router.DELETE("/scenario/:scenario/element/:element", tonic.Handler(DeleteElement, 204))
 
+	// Cards
 	router.GET("/scenario/:scenario/card", tonic.Handler(ListCards, 200))
 	router.GET("/scenario/:scenario/card/:card", tonic.Handler(GetCard, 200))
 	router.PUT("/scenario/:scenario/card/:card", tonic.Handler(UpdateCard, 200))
 
+	// Card icons
 	router.POST("/scenario/:scenario/card/:card/icon", tonic.Handler(NewCardIcon, 201))
 	router.GET("/scenario/:scenario/card/:card/icon", tonic.Handler(ListCardIcons, 200))
 	router.GET("/scenario/:scenario/card/:card/icon/:icon", tonic.Handler(GetCardIcon, 200))
