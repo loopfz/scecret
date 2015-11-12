@@ -43,6 +43,7 @@ func CreateSkillTest(db *gorp.DbMap, card *Card, linkedStat *Stat, NormalShields
 		NormalShields:  NormalShields,
 		SkullShields:   SkullShields,
 		HeartShields:   HeartShields,
+		UTShields:      UTShields,
 		SpecialShields: SpecialShields,
 	}
 

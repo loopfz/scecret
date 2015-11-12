@@ -69,24 +69,28 @@ func main() {
 	router.GET("/scenario/:scenario/statetokenlink/:statetokenlink", tonic.Handler(GetStateTokenLink, 200))
 	router.DELETE("/scenario/:scenario/statetokenlink/:statetokenlink", tonic.Handler(DeleteStateTokenLink, 204))
 
+	// Stats
 	router.POST("/scenario/:scenario/stat", tonic.Handler(NewStat, 201))
 	router.GET("/scenario/:scenario/stat", tonic.Handler(ListStats, 200))
 	router.GET("/scenario/:scenario/stat/:stat", tonic.Handler(GetStat, 200))
 	router.PUT("/scenario/:scenario/stat/:stat", tonic.Handler(UpdateStat, 200))
-	router.DELETE("/scenario/:scenario/stat/:stat", tonic.Handler(DeleteStat, 200))
+	router.DELETE("/scenario/:scenario/stat/:stat", tonic.Handler(DeleteStat, 204))
 
-	// TODO POST /scenario/:scenario/skilltest
-	// TODO GET /scenario/:scenario/skilltest
-	// TODO GET /scenario/:scenario/skilltest/:skilltest
-	// TODO PUT /scenario/:scenario/skilltest/:skilltest
-	// TODO DELETE /scenario/:scenario/skilltest/:skilltest
+	// Skill tests
+	router.POST("/scenario/:scenario/skilltest", tonic.Handler(CreateSkillTest, 201))
+	router.GET("/scenario/:scenario/skilltest", tonic.Handler(ListSkillTests, 200))
+	router.GET("/scenario/:scenario/skilltest/:skilltest", tonic.Handler(GetSkillTest, 200))
+	router.PUT("/scenario/:scenario/skilltest/:skilltest", tonic.Handler(UpdateSkillTest, 200))
+	router.DELETE("/scenario/:scenario/skilltest/:skilltest", tonic.Handler(DeleteSkillTest, 204))
 
+	// Icons
 	router.POST("/scenario/:scenario/icon", tonic.Handler(NewIcon, 201))
 	router.GET("/scenario/:scenario/icon", tonic.Handler(ListIcons, 200))
 	router.GET("/scenario/:scenario/icon/:icon", tonic.Handler(GetIcon, 200))
 	router.PUT("/scenario/:scenario/icon/:icon", tonic.Handler(UpdateIcon, 200))
 	router.DELETE("/scenario/:scenario/icon/:icon", tonic.Handler(DeleteIcon, 204))
 
+	// Elements
 	router.POST("/scenario/:scenario/element", tonic.Handler(NewElement, 201))
 	router.GET("/scenario/:scenario/element", tonic.Handler(ListElements, 200))
 	router.GET("/scenario/:scenario/element/:element", tonic.Handler(GetElement, 200))
