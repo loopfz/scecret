@@ -46,8 +46,7 @@ The progress:
         Stat done, Icon done
         In a second step: Receptacle, MissionSuccess, Codex, Plan (nothing special to do, mostly generic cards)
     - API handlers: 80%
-        Location, element, metadata, card done
-        TODO soon: sandbox (bootstrap asylum scenario for demo)
+        Location, element, metadata, card, sandbox done
         In a second step: Receptacle, MissionSuccess, Codex, Plan ...
     - PDF generation: 0%
         TODO
