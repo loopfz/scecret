@@ -17,7 +17,7 @@ type StateToken struct {
 }
 
 // Loads a state token by ID
-func LoadFromID(db *gorp.DbMap, ID int64) (*StateToken, error) {
+func LoadStateTokenFromID(db *gorp.DbMap, ID int64) (*StateToken, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load state token")
 	}

@@ -24,7 +24,7 @@ type Location struct {
 // Decoupled from Location to allow things like multiple "A" locations
 type LocationCard struct {
 	ID         int64  `json:"id" db:"id"`
-	IDLocation int64  `json:"id_location" db:"id_location"`
+	IDLocation int64  `json:"-" db:"id_location"`
 	IDCard     int64  `json:"id_card" db:"id_card"`
 	Letter     string `json:"letter" db:"letter"`
 }

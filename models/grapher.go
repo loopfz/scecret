@@ -25,7 +25,7 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 		return nil, err
 	}
 
-	var locGraphOut []*LocGraph
+	locGraphOut := []*LocGraph{}
 	cards := make(map[int64]*CardGraph)
 
 	for _, loc := range locations {
@@ -78,7 +78,7 @@ func Graph(db *gorp.DbMap, scenar *Scenario) (interface{}, error) {
 		}
 	}
 
-	stateTk, err := ListStateTokenLinks(db, scenar, nil)
+	stateTk, err := ListStateTokenLinks(db, scenar, nil, nil)
 	if err != nil {
 		return nil, err
 	}

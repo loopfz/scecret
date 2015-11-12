@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 
 	"golang.org/x/crypto/scrypt"
 
@@ -12,7 +13,8 @@ import (
 )
 
 const (
-	SALT_LEN = 32
+	SALT_LEN         = 32
+	PASSWORD_MIN_LEN = 8
 )
 
 type User struct {
@@ -29,7 +31,7 @@ func CreateUser(db *gorp.DbMap, email string, password string) (*User, error) {
 		return nil, errors.New("Missing db parameter to create user")
 	}
 
-	salt, err := securerandom.RandomBytes(SALT_LEN)
+	salt, err := securerandom.RandomString(SALT_LEN)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +39,7 @@ func CreateUser(db *gorp.DbMap, email string, password string) (*User, error) {
 	u := &User{
 		Email:        email,
 		pwplain:      password,
-		PasswordSalt: string(salt),
+		PasswordSalt: salt,
 	}
 
 	u.hash()
@@ -86,14 +88,14 @@ func (u *User) Update(db *gorp.DbMap, email string, password string) error {
 		return errors.New("Missing db parameter to update user")
 	}
 
-	salt, err := securerandom.RandomBytes(SALT_LEN)
+	salt, err := securerandom.RandomString(SALT_LEN)
 	if err != nil {
 		return err
 	}
 
 	u.Email = email
 	u.pwplain = password
-	u.PasswordSalt = string(salt)
+	u.PasswordSalt = salt
 
 	u.hash()
 
@@ -118,6 +120,9 @@ func (u *User) Valid() error {
 	if u.Email == "" {
 		// TODO match email regex
 		return errors.New("Empty email")
+	}
+	if len(u.pwplain) < PASSWORD_MIN_LEN {
+		return fmt.Errorf("Password too short: min %d", PASSWORD_MIN_LEN)
 	}
 	if u.PasswordHash == "" || u.PasswordSalt == "" {
 		return errors.New("Missing hashed password")

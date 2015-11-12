@@ -164,7 +164,7 @@ func ListSkillTests(db *gorp.DbMap, scenar *Scenario, card *Card, s *Stat) ([]*S
 }
 
 // Load a skill test, by ID. Optionally filtered by scenario.
-func LoadSkillTestByID(db *gorp.DbMap, scenar *Scenario, IDSkillTest int64) (*SkillTest, error) {
+func LoadSkillTestFromID(db *gorp.DbMap, scenar *Scenario, IDSkillTest int64) (*SkillTest, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load skill test")
 	}

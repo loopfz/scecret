@@ -17,7 +17,7 @@ type ElementLink struct {
 }
 
 // Create a link between an element and a card.
-func CreateElementLink(db *gorp.DbMap, elem *Element, card *Card, GivesUses bool) (*ElementLink, error) {
+func CreateElementLink(db *gorp.DbMap, card *Card, elem *Element, GivesUses bool) (*ElementLink, error) {
 	if db == nil || elem == nil || card == nil {
 		return nil, errors.New("Missing parameters to create element link")
 	}
@@ -77,7 +77,7 @@ func ListElementLinks(db *gorp.DbMap, scenar *Scenario, card *Card, elem *Elemen
 }
 
 // Load an element link by id, with optional scenario filter.
-func LoadElementLink(db *gorp.DbMap, scenar *Scenario, ID int64) (*ElementLink, error) {
+func LoadElementLinkFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*ElementLink, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load element link")
 	}

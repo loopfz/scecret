@@ -85,8 +85,8 @@ func ListIcons(db *gorp.DbMap, scenar *Scenario) ([]*Icon, error) {
 	return ico, nil
 }
 
-// Load an icon from ID. If scenar parameter is non-nil it acts as a filter: only rows with id_scenario NULL or stricly equal
-// will be returned.
+// Load an icon from ID. If scenar parameter is non-nil it acts as a filter:
+// only rows with id_scenario NULL or stricly equal will be returned.
 func LoadIconFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Icon, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load icon")
@@ -96,9 +96,7 @@ func LoadIconFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Icon, error) {
 		squirrel.Eq{`id`: ID},
 	)
 
-	if scenar == nil {
-		selector.Where(squirrel.Eq{`id_scenario`: nil}) // squirrel.Eq properly transforms nil rvalues into IS NULL
-	} else {
+	if scenar != nil {
 		selector.Where(squirrel.Or{squirrel.Eq{`id_scenario`: nil}, squirrel.Eq{`id_scenario`: scenar.ID}})
 	}
 

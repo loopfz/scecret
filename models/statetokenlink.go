@@ -62,7 +62,7 @@ func CreateStateTokenLink(db *gorp.DbMap, card *Card, tk *StateToken, UnlocksUnl
 }
 
 // List state token links, with filters.
-func ListStateTokenLinks(db *gorp.DbMap, scenar *Scenario, card *Card) ([]*StateTokenLink, error) {
+func ListStateTokenLinks(db *gorp.DbMap, scenar *Scenario, card *Card, tk *StateToken) ([]*StateTokenLink, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load state token links")
 	}
@@ -74,6 +74,9 @@ func ListStateTokenLinks(db *gorp.DbMap, scenar *Scenario, card *Card) ([]*State
 	}
 	if card != nil {
 		selector.Where(squirrel.Eq{`id_card`: card.ID})
+	}
+	if tk != nil {
+		selector.Where(squirrel.Eq{`id_state_token`: tk.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -92,7 +95,7 @@ func ListStateTokenLinks(db *gorp.DbMap, scenar *Scenario, card *Card) ([]*State
 }
 
 // Loads a state token link by ID. Optionally filtered by scenario.
-func LoadStateTokenLinkByID(db *gorp.DbMap, scenar *Scenario, ID int64) (*StateTokenLink, error) {
+func LoadStateTokenLinkFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*StateTokenLink, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load card links")
 	}

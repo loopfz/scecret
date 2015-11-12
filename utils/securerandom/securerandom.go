@@ -1,12 +1,15 @@
 package securerandom
 
-import "crypto/rand"
+import (
+	"crypto/rand"
+	"encoding/hex"
+)
 
-func RandomBytes(size uint) ([]byte, error) {
+func RandomString(size uint) (string, error) {
 	ret := make([]byte, size)
 	_, err := rand.Read(ret)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return ret, nil
+	return hex.EncodeToString(ret), nil
 }

@@ -130,6 +130,35 @@ func LoadCardFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Card, error) {
 	return &c, nil
 }
 
+// List a scenario's cards.
+func ListCards(db *gorp.DbMap, scenar *Scenario) ([]*Card, error) {
+	if db == nil {
+		return nil, errors.New("Missing db parameter to list cards")
+	}
+
+	selector := sqlgenerator.PGsql.Select(`*`).From(`"card"`)
+
+	if scenar != nil {
+		selector.Where(
+			squirrel.Eq{`id_scenario`: scenar.ID},
+		)
+	}
+
+	query, args, err := selector.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var c []*Card
+
+	_, err = db.Select(&c, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return c, nil
+}
+
 // Update a card.
 func (c *Card) Update(db *gorp.DbMap, num uint, desc string, front *CardFace, back *CardFace) error {
 	if db == nil {
@@ -241,7 +270,7 @@ func (c *Card) ListCardIcons(db *gorp.DbMap, SkillTest *SkillTest, StateTokenLin
 }
 
 // Load one CardIcon object linked to this card, by ID.
-func (c *Card) LoadCardIconByID(db *gorp.DbMap, ID int64) (*CardIcon, error) {
+func (c *Card) LoadCardIconFromID(db *gorp.DbMap, ID int64) (*CardIcon, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load card icon")
 	}
@@ -308,6 +337,10 @@ func (ci *CardIcon) Update(db *gorp.DbMap, ico *Icon, FrontBack bool,
 func (ci *CardIcon) Delete(db *gorp.DbMap) error {
 	if db == nil {
 		return errors.New("Missing db parameter to delete card icon")
+	}
+
+	if ci.IDSkillTest != nil || ci.IDStateTokenLink != nil {
+		return errors.New("Cannot delete auto-generated icon")
 	}
 
 	rows, err := db.Delete(ci)

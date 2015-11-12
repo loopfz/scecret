@@ -79,7 +79,7 @@ func ListLocationLinks(db *gorp.DbMap, scenar *Scenario, card *Card, loc *Locati
 }
 
 // Loads a location link by ID. Optionally filtered by scenario.
-func LoadLocationLinkByID(db *gorp.DbMap, scenar *Scenario, ID int64) (*LocationLink, error) {
+func LoadLocationLinkFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*LocationLink, error) {
 	if db == nil {
 		return nil, errors.New("Missing db parameter to load card links")
 	}
