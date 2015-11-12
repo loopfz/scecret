@@ -45,9 +45,9 @@ The progress:
         Graph generation done for scenario view (summary of relations between all location cards)
         Stat done, Icon done
         In a second step: Receptacle, MissionSuccess, Codex, Plan (nothing special to do, mostly generic cards)
-    - API handlers: 70%
-        Location, element, metadata done
-        TODO soon: card
+    - API handlers: 80%
+        Location, element, metadata, card done
+        TODO soon: sandbox (bootstrap asylum scenario for demo)
         In a second step: Receptacle, MissionSuccess, Codex, Plan ...
     - PDF generation: 0%
         TODO

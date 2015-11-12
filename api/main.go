@@ -97,14 +97,15 @@ func main() {
 	router.PUT("/scenario/:scenario/element/:element", tonic.Handler(UpdateElement, 200))
 	router.DELETE("/scenario/:scenario/element/:element", tonic.Handler(DeleteElement, 204))
 
-	// TODO GET /scenario/:scenario/card
-	// TODO GET /scenario/:scenario/card/:card
-	// TODO PUT /scenario/:scenario/card/:card
-	// TODO POST /scenario/:scenario/card/:card/icon
-	// TODO GET /scenario/:scenario/card/:card/icon
-	// TODO GET /scenario/:scenario/card/:card/icon/:icon
-	// TODO PUT /scenario/:scenario/card/:card/icon/:icon
-	// TODO DELETE /scenario/:scenario/card/:card/icon/:icon
+	router.GET("/scenario/:scenario/card", tonic.Handler(ListCards, 200))
+	router.GET("/scenario/:scenario/card/:card", tonic.Handler(GetCard, 200))
+	router.PUT("/scenario/:scenario/card/:card", tonic.Handler(UpdateCard, 200))
+
+	router.POST("/scenario/:scenario/card/:card/icon", tonic.Handler(NewCardIcon, 201))
+	router.GET("/scenario/:scenario/card/:card/icon", tonic.Handler(ListCardIcons, 200))
+	router.GET("/scenario/:scenario/card/:card/icon/:icon", tonic.Handler(GetCardIcon, 200))
+	router.PUT("/scenario/:scenario/card/:card/icon/:icon", tonic.Handler(UpdateCardIcon, 200))
+	router.DELETE("/scenario/:scenario/card/:card/icon/:icon", tonic.Handler(DeleteCardIcon, 204))
 
 	// TODO POST /sandbox
 

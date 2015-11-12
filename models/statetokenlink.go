@@ -165,7 +165,7 @@ func (cl *StateTokenLink) Update(db *gorp.DbMap, card *Card, tk *StateToken, Unl
 
 	// Update the CardIcon, changing only the ico parameter
 	err = ci.Update(db, ico, ci.FrontBack, ci.X, ci.Y, ci.SizeX, ci.SizeY, ci.Annotation,
-		ci.AnnotationType, nil, cl)
+		ci.AnnotationType)
 	if err != nil {
 		return err // TODO Tx
 	}

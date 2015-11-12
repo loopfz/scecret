@@ -299,8 +299,7 @@ func (c *Card) LoadCardIconFromID(db *gorp.DbMap, ID int64) (*CardIcon, error) {
 // Update a CardIcon object.
 func (ci *CardIcon) Update(db *gorp.DbMap, ico *Icon, FrontBack bool,
 	X, Y, SizeX, SizeY uint,
-	Annotation string, AnnotationType int,
-	SkillTest *SkillTest, StateTokenLink *StateTokenLink) error {
+	Annotation string, AnnotationType int) error {
 
 	ci.FrontBack = FrontBack
 	ci.IDIcon = ico.ID
@@ -310,12 +309,6 @@ func (ci *CardIcon) Update(db *gorp.DbMap, ico *Icon, FrontBack bool,
 	ci.SizeY = SizeY
 	ci.Annotation = Annotation
 	ci.AnnotationType = AnnotationType
-	if SkillTest != nil {
-		ci.IDSkillTest = &SkillTest.ID
-	}
-	if StateTokenLink != nil {
-		ci.IDStateTokenLink = &StateTokenLink.ID
-	}
 
 	err := ci.Valid()
 	if err != nil {
