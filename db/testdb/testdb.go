@@ -11,11 +11,16 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func InitTestDB() (*gorp.DbMap, error) {
+func InitTestDB(random bool) (*gorp.DbMap, error) {
 
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	sqldb, err := sql.Open("sqlite3", fmt.Sprintf("/tmp/scecret%d.db", rand.Int()))
+	var s string
+	if random {
+		rand.Seed(time.Now().UTC().UnixNano())
+		s = fmt.Sprintf("/tmp/scecret%d.db", rand.Int())
+	} else {
+		s = "/tmp/scecret.db"
+	}
+	sqldb, err := sql.Open("sqlite3", s)
 	if err != nil {
 		return nil, err
 	}

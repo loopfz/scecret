@@ -11,7 +11,7 @@ var db *gorp.DbMap
 
 func main() {
 
-	tdb, err := testdb.InitTestDB()
+	tdb, err := testdb.InitTestDB(false)
 	if err != nil {
 		panic(err)
 	}

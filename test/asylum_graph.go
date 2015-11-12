@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	db, err := testdb.InitTestDB()
+	db, err := testdb.InitTestDB(true)
 	if err != nil {
 		panic(err)
 	}
@@ -94,7 +94,7 @@ func main() {
 	// CRYPTE
 	crypte, crypteCards := createLoc(db, scenar, "Crypte", 7)
 
-	_, err = models.CreateElementLink(db, elemDortoirMap, dortoirCards[5], true)
+	_, err = models.CreateElementLink(db, dortoirCards[5], elemDortoirMap, true)
 	if err != nil {
 		panic(err)
 	}
