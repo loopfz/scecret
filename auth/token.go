@@ -1,11 +1,11 @@
 package auth
 
 import (
-	"errors"
 	"sync"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-gorp/gorp"
+	"github.com/juju/errors"
 	"github.com/loopfz/scecret/models"
 	"github.com/loopfz/scecret/utils/hasher"
 	"github.com/loopfz/scecret/utils/securerandom"
@@ -43,12 +43,12 @@ func RetrieveTokenUser(db *gorp.DbMap, c *gin.Context) (*models.User, error) {
 	email, ok := tokenStore[hasher.Hash(tk)]
 	lock.RUnlock()
 	if !ok {
-		return nil, errors.New("Bad token")
+		return nil, errors.NewUnauthorized(nil, "Bad token")
 	}
 
 	u, err := models.LoadUserFromEmail(db, email)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, errors.New("Error retrieving user information"))
 	}
 
 	return u, nil
@@ -67,7 +67,7 @@ func RetrieveTokenScenario(db *gorp.DbMap, c *gin.Context, IDScenario int64) (*m
 	}
 
 	if sc.IDAuthor != u.ID {
-		return nil, errors.New("No such scenario")
+		return nil, errors.NewNotFound(nil, "No such scenario")
 	}
 
 	return sc, nil

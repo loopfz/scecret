@@ -3,20 +3,26 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-gorp/gorp"
-	"github.com/loopfz/scecret/db/testdb"
-	"github.com/loopfz/scecret/utils/tonic"
+	"github.com/loopfz/gad/zesty"
+	"github.com/loopfz/gadgeto/tonic"
+	"github.com/loopfz/gadgeto/tonic/jujuerrhook"
+	"github.com/loopfz/scecret/constants"
+	"github.com/loopfz/scecret/db/initdb"
 )
 
-var db *gorp.DbMap
+var db *gorp.DbMap // TODO remove
 
 func main() {
 
-	tdb, err := testdb.InitTestDB(false)
+	tdb, err := initdb.InitSqlite()
 	if err != nil {
 		panic(err)
 	}
 
+	tonic.SetErrorHook(jujuerrhook.ErrHook)
+
 	db = tdb
+	zesty.RegisterDB(zesty.NewDB(tdb), constants.DBName)
 
 	router := gin.Default()
 

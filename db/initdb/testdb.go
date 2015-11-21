@@ -1,4 +1,4 @@
-package testdb
+package initdb
 
 import (
 	"database/sql"
@@ -7,25 +7,12 @@ import (
 	"time"
 
 	"github.com/go-gorp/gorp"
+	"github.com/loopfz/scecret/constants"
 	"github.com/loopfz/scecret/models"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func InitTestDB(random bool) (*gorp.DbMap, error) {
-
-	var s string
-	if random {
-		rand.Seed(time.Now().UTC().UnixNano())
-		s = fmt.Sprintf("/tmp/scecret%d.db", rand.Int())
-	} else {
-		s = "/tmp/scecret.db"
-	}
-	sqldb, err := sql.Open("sqlite3", s)
-	if err != nil {
-		return nil, err
-	}
-
-	db := &gorp.DbMap{Db: sqldb, Dialect: gorp.SqliteDialect{}}
+func PopulateDbMap(db *gorp.DbMap) error {
 
 	db.AddTableWithName(models.User{}, `user`).SetKeys(true, "id")
 	db.AddTableWithName(models.Scenario{}, `scenario`).SetKeys(true, "id")
@@ -42,7 +29,50 @@ func InitTestDB(random bool) (*gorp.DbMap, error) {
 	db.AddTableWithName(models.Stat{}, `stat`).SetKeys(true, "id")
 	db.AddTableWithName(models.SkillTest{}, `skill_test`).SetKeys(true, "id")
 
-	err = db.CreateTablesIfNotExists()
+	return db.CreateTablesIfNotExists()
+}
+
+func InitPostgres() (*gorp.DbMap, error) {
+	sqldb, err := sql.Open("postgres", fmt.Sprintf("dbname=%s", constants.DBName))
+	if err != nil {
+		return nil, err
+	}
+
+	db := &gorp.DbMap{Db: sqldb, Dialect: gorp.PostgresDialect{}}
+
+	err = PopulateDbMap(db)
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}
+
+func InitSqlite() (*gorp.DbMap, error) {
+	return doInitSqlite(false)
+}
+
+func InitSqliteRandom() (*gorp.DbMap, error) {
+	return doInitSqlite(true)
+}
+
+func doInitSqlite(random bool) (*gorp.DbMap, error) {
+
+	var s string
+	if random {
+		rand.Seed(time.Now().UTC().UnixNano())
+		s = fmt.Sprintf("/tmp/%s%d.db", constants.DBName, rand.Int())
+	} else {
+		s = fmt.Sprintf("/tmp/%s.db", constants.DBName)
+	}
+	sqldb, err := sql.Open("sqlite3", s)
+	if err != nil {
+		return nil, err
+	}
+
+	db := &gorp.DbMap{Db: sqldb, Dialect: gorp.SqliteDialect{}}
+
+	err = PopulateDbMap(db)
 	if err != nil {
 		return nil, err
 	}
