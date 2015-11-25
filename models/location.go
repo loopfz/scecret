@@ -16,7 +16,7 @@ type Location struct {
 	ID         int64  `json:"id" db:"id"`
 	IDScenario int64  `json:"-" db:"id_scenario"`
 	Name       string `json:"name" db:"name"`
-	Hidden     bool   `json:"json:"hidden" db:"hidden"`
+	Hidden     bool   `json:"hidden" db:"hidden"`
 	Notes      string `json:"notes" db:"notes"`
 }
 
