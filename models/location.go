@@ -237,7 +237,7 @@ func (loc *Location) LoadLocationCardFromID(db *gorp.DbMap, ID int64) (*Location
 
 	var lc LocationCard
 
-	_, err = db.Select(&lc, query, args...)
+	err = db.SelectOne(&lc, query, args...)
 	if err != nil {
 		return nil, err
 	}

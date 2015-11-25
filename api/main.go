@@ -49,7 +49,7 @@ func main() {
 	// Location cards
 	router.POST("/scenario/:scenario/location/:location/card", tonic.Handler(NewLocationCard, 201))
 	router.GET("/scenario/:scenario/location/:location/card", tonic.Handler(ListLocationCards, 200))
-	router.GET("/scenario/:scenario/location/:location/card/:card", tonic.Handler(GetLocationCard, 200))
+	router.GET("/scenario/:scenario/location/:location/card/:location_card", tonic.Handler(GetLocationCard, 200))
 	router.PUT("/scenario/:scenario/location/:location/card/:location_card", tonic.Handler(UpdateLocationCard, 200))
 	router.DELETE("/scenario/:scenario/location/:location/card/:location_card", tonic.Handler(DeleteLocationCard, 204))
 
