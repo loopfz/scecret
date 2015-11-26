@@ -46,17 +46,17 @@ func ListElementLinks(db *gorp.DbMap, scenar *Scenario, card *Card, elem *Elemen
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"element_link"`)
 
 	if scenar != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_scenario`: scenar.ID},
 		)
 	}
 	if card != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_card`: card.ID},
 		)
 	}
 	if elem != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_element`: elem.ID},
 		)
 	}
@@ -87,7 +87,7 @@ func LoadElementLinkFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Element
 	)
 
 	if scenar != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_scenario`: scenar.ID},
 		)
 	}

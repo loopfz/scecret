@@ -59,7 +59,7 @@ func ListElements(db *gorp.DbMap, scenar *Scenario) ([]*Element, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"element"`)
 
 	if scenar == nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_scenario`: scenar.ID},
 		)
 	}
@@ -117,7 +117,7 @@ func LoadElementFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Element, er
 	)
 
 	if scenar == nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_scenario`: scenar.ID},
 		)
 	}

@@ -63,7 +63,7 @@ func ListLocations(db *gorp.DbMap, scenar *Scenario) ([]*Location, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"location"`)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -92,7 +92,7 @@ func LoadLocationFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Location, 
 	)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()

@@ -52,7 +52,7 @@ func ListStats(db *gorp.DbMap, scenar *Scenario) ([]*Stat, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"stat"`)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -79,7 +79,7 @@ func LoadStatFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Stat, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"stat"`)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()

@@ -70,13 +70,13 @@ func ListStateTokenLinks(db *gorp.DbMap, scenar *Scenario, card *Card, tk *State
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"state_token_link"`)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 	if card != nil {
-		selector.Where(squirrel.Eq{`id_card`: card.ID})
+		selector = selector.Where(squirrel.Eq{`id_card`: card.ID})
 	}
 	if tk != nil {
-		selector.Where(squirrel.Eq{`id_state_token`: tk.ID})
+		selector = selector.Where(squirrel.Eq{`id_state_token`: tk.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -105,7 +105,7 @@ func LoadStateTokenLinkFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Stat
 	)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()

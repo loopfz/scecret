@@ -62,7 +62,7 @@ func ListIcons(db *gorp.DbMap, scenar *Scenario) ([]*Icon, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"icon"`)
 
 	if scenar != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Or{
 				squirrel.Eq{`id_scenario`: nil},
 				squirrel.Eq{`id_scenario`: scenar.ID},
@@ -97,7 +97,7 @@ func LoadIconFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Icon, error) {
 	)
 
 	if scenar != nil {
-		selector.Where(squirrel.Or{squirrel.Eq{`id_scenario`: nil}, squirrel.Eq{`id_scenario`: scenar.ID}})
+		selector = selector.Where(squirrel.Or{squirrel.Eq{`id_scenario`: nil}, squirrel.Eq{`id_scenario`: scenar.ID}})
 	}
 
 	query, args, err := selector.ToSql()

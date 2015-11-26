@@ -51,7 +51,7 @@ func ListScenarios(db *gorp.DbMap, author *User) ([]*Scenario, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"scenario"`)
 
 	if author != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_author`: author.ID},
 		)
 	}
@@ -82,7 +82,7 @@ func LoadScenarioFromID(db *gorp.DbMap, author *User, ID int64) (*Scenario, erro
 	)
 
 	if author != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_author`: author.ID},
 		)
 	}

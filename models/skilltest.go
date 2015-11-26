@@ -139,15 +139,15 @@ func ListSkillTests(db *gorp.DbMap, scenar *Scenario, card *Card, s *Stat) ([]*S
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"skill_test"`)
 
 	if scenar != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_scenario`: scenar.ID},
 		)
 	}
 	if card != nil {
-		selector.Where(squirrel.Eq{`id_card`: card.ID})
+		selector = selector.Where(squirrel.Eq{`id_card`: card.ID})
 	}
 	if s != nil {
-		selector.Where(squirrel.Eq{`id_stat`: s.ID})
+		selector = selector.Where(squirrel.Eq{`id_stat`: s.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -175,7 +175,7 @@ func LoadSkillTestFromID(db *gorp.DbMap, scenar *Scenario, IDSkillTest int64) (*
 	)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()

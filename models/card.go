@@ -113,7 +113,7 @@ func LoadCardFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Card, error) {
 	)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -139,7 +139,7 @@ func ListCards(db *gorp.DbMap, scenar *Scenario) ([]*Card, error) {
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"card"`)
 
 	if scenar != nil {
-		selector.Where(
+		selector = selector.Where(
 			squirrel.Eq{`id_scenario`: scenar.ID},
 		)
 	}
@@ -248,10 +248,10 @@ func (c *Card) ListCardIcons(db *gorp.DbMap, SkillTest *SkillTest, StateTokenLin
 	)
 
 	if SkillTest != nil {
-		selector.Where(squirrel.Eq{`id_skilltest`: SkillTest.ID})
+		selector = selector.Where(squirrel.Eq{`id_skilltest`: SkillTest.ID})
 	}
 	if StateTokenLink != nil {
-		selector.Where(squirrel.Eq{`id_statetokenlink`: StateTokenLink.ID})
+		selector = selector.Where(squirrel.Eq{`id_statetokenlink`: StateTokenLink.ID})
 	}
 
 	query, args, err := selector.ToSql()

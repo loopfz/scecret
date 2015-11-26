@@ -54,13 +54,13 @@ func ListLocationLinks(db *gorp.DbMap, scenar *Scenario, card *Card, loc *Locati
 	selector := sqlgenerator.PGsql.Select(`*`).From(`"location_link"`)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 	if card != nil {
-		selector.Where(squirrel.Eq{`id_card`: card.ID})
+		selector = selector.Where(squirrel.Eq{`id_card`: card.ID})
 	}
 	if loc != nil {
-		selector.Where(squirrel.Eq{`id_location`: loc.ID})
+		selector = selector.Where(squirrel.Eq{`id_location`: loc.ID})
 	}
 
 	query, args, err := selector.ToSql()
@@ -89,7 +89,7 @@ func LoadLocationLinkFromID(db *gorp.DbMap, scenar *Scenario, ID int64) (*Locati
 	)
 
 	if scenar != nil {
-		selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
+		selector = selector.Where(squirrel.Eq{`id_scenario`: scenar.ID})
 	}
 
 	query, args, err := selector.ToSql()
