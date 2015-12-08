@@ -143,6 +143,19 @@ func (loc *Location) Delete(db *gorp.DbMap) error {
 		return errors.New("Missing db parameter to delete location")
 	}
 
+	// TODO Tx
+	locCards, err := loc.ListLocationCards(db)
+	if err != nil {
+		return err
+	}
+
+	for _, lc := range locCards {
+		err := lc.Delete(db)
+		if err != nil {
+			return err
+		}
+	}
+
 	rows, err := db.Delete(loc)
 	if err != nil {
 		return err
